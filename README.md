@@ -38,17 +38,19 @@ This project provides a production-ready, clean-architecture solution for displa
     cp .env.example .env
     ```
 
-3. Run the CSV fetch/export process (if needed):
+3. Run the CSV fetch/export process (required for initial data):
     ```bash
     python src/main.py
 
-    # Ensure the CSV file exists at the path specified in .env (OUTPUT_CSV_PATH)
+    # This will fetch all users from the JSONPlaceholder API and write them to the CSV file
+    # specified by OUTPUT_CSV_PATH in your .env file.
     # The backend will serve data from this file.
     ```
 
 4. Start the API server:
     ```bash
     uvicorn src.interfaces.api:app --reload
+    # The API will be available at http://localhost:8000/api/users
     ```
 
 ---
@@ -92,10 +94,30 @@ This project provides a production-ready, clean-architecture solution for displa
 - All environment variables are managed via `.env` and `.env.example` files in both backend and frontend.
 - Backend:
   - `USER_API_URL`: Source API for fetching users (used by fetch/export script).
-  - `OUTPUT_CSV_PATH`: Path to the CSV file.
-  - `LOG_LEVEL`: Logging level.
+  - `OUTPUT_CSV_PATH`: Path to the CSV file (e.g., `output/users.csv`).
+  - `LOG_LEVEL`: Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`).
 - Frontend:
   - `REACT_APP_API_URL`: Backend API base URL.
+
+---
+
+## How to Run End-to-End
+
+1. Ensure Python dependencies are installed (`pip install -r requirements.txt`).
+2. Ensure Node.js dependencies are installed in `frontend/` (`npm install`).
+3. Copy `.env.example` to `.env` and adjust as needed.
+4. Run the backend CSV fetcher: `python src/main.py`
+5. Start the backend API: `uvicorn src.interfaces.api:app --reload`
+6. Start the frontend: `cd frontend && npm start`
+7. Visit [http://localhost:3000](http://localhost:3000) to view the user table.
+
+## Notes
+
+- The backend fetches all user fields from the JSONPlaceholder API and writes them to CSV with no data loss or transformation.
+- The CSV output matches the API response structure, including all nested fields.
+- All configuration is managed via `.env` files.
+- Logging is enabled and configurable via `LOG_LEVEL`.
+- The backend and frontend are decoupled and can be deployed independently.
 
 ---
 
