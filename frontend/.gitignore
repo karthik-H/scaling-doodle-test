@@ -18,6 +18,9 @@
 .env.test.local
 .env.production.local
 
+# Do not ignore .env (used for API URL configuration)
+# Only ignore local overrides above
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

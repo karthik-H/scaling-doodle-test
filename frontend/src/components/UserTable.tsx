@@ -1,41 +1,55 @@
 import React, { useEffect, useState } from "react";
 import "./UserTable.css";
+import { fetchUsers, User } from "../services/userService";
 
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-  website: string;
-  [key: string]: any; // For address and company fields
-}
-
-const flattenAddress = (address: any) =>
-  address
-    ? `${address.street}, ${address.suite}, ${address.city}, ${address.zipcode} (${address.geo?.lat}, ${address.geo?.lng})`
+/**
+ * Flattens the address object or string for display.
+ * @param address Address object or stringified JSON
+ */
+const flattenAddress = (address: any) => {
+  let addr = address;
+  if (typeof address === "string") {
+    try {
+      addr = JSON.parse(address);
+    } catch {
+      return address;
+    }
+  }
+  return addr
+    ? `${addr.street}, ${addr.suite}, ${addr.city}, ${addr.zipcode} (${addr.geo?.lat}, ${addr.geo?.lng})`
     : "";
+};
 
-const flattenCompany = (company: any) =>
-  company ? `${company.name} (${company.catchPhrase}, ${company.bs})` : "";
+/**
+ * Flattens the company object or string for display.
+ * @param company Company object or stringified JSON
+ */
+const flattenCompany = (company: any) => {
+  let comp = company;
+  if (typeof company === "string") {
+    try {
+      comp = JSON.parse(company);
+    } catch {
+      return company;
+    }
+  }
+  return comp ? `${comp.name} (${comp.catchPhrase}, ${comp.bs})` : "";
+};
 
+/**
+ * UserTable component - displays user data in a table view.
+ */
 const UserTable: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const loadUsers = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(
-          process.env.REACT_APP_API_URL + "/api/users"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        const data = await response.json();
+        const data = await fetchUsers();
         setUsers(data);
       } catch (err: any) {
         setError(err.message || "Unknown error");
@@ -43,7 +57,7 @@ const UserTable: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchUsers();
+    loadUsers();
   }, []);
 
   if (loading) return <div>Loading user data...</div>;
