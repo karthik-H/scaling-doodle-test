@@ -41,6 +41,9 @@ This project provides a production-ready, clean-architecture solution for displa
 3. Run the CSV fetch/export process (if needed):
     ```bash
     python src/main.py
+
+    # Ensure the CSV file exists at the path specified in .env (OUTPUT_CSV_PATH)
+    # The backend will serve data from this file.
     ```
 
 4. Start the API server:
@@ -70,7 +73,17 @@ This project provides a production-ready, clean-architecture solution for displa
 4. Start the frontend:
     ```bash
     npm start
+
+    # The app will run at http://localhost:3000 and expects the backend API at REACT_APP_API_URL.
     ```
+
+---
+
+## Troubleshooting
+
+- If you see CORS errors, ensure the backend is running and CORS is enabled (see `src/interfaces/api.py`).
+- If the table does not load, check that `REACT_APP_API_URL` in `frontend/.env` matches your backend URL and port.
+- Ensure the CSV file exists and is readable by the backend.
 
 ---
 

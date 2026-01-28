@@ -23,6 +23,11 @@ npm start
 
 The app will run at [http://localhost:3000](http://localhost:3000) and expects the backend API at the URL specified in `.env` (`REACT_APP_API_URL`).
 
+## Troubleshooting
+
+- If you see CORS errors, ensure the backend is running and CORS is enabled.
+- If the table does not load, check that `REACT_APP_API_URL` in `.env` matches your backend URL and port.
+
 ## Configuration
 
 - `.env` contains the backend API URL. Adjust as needed for your environment.
