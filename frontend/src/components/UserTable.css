@@ -1,0 +1,36 @@
+.user-table-container {
+  margin: 2rem auto;
+  max-width: 1200px;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.user-table th,
+.user-table td {
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.user-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+.user-table tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.error {
+  color: #b00020;
+  font-weight: bold;
+  margin: 1rem 0;
+}
